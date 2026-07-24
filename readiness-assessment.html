@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>DSALTA Readiness Assessment</title>
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f8faf9;
+      --surface-green: #f1faf5;
+      --text: #343946;
+      --muted: #596273;
+      --border: #dfe8e4;
+      --brand-dark: #214f4b;
+      --brand-green: #0d9b59;
+      --brand-green-bright: #1bc072;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Apfel Grotezk", "Aptos", "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    header {
+      height: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--brand-dark);
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      position: relative;
+      width: 42px;
+      height: 42px;
+      border: 3px solid var(--brand-dark);
+    }
+
+    .logo-mark::after {
+      content: "*";
+      position: absolute;
+      right: -11px;
+      top: -17px;
+      padding: 0 2px;
+      background: var(--white);
+      color: var(--brand-green);
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .logo-name {
+      font-size: 29px;
+      font-weight: 500;
+      letter-spacing: -0.045em;
+    }
+
+    .back-link {
+      color: var(--brand-dark);
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .back-link:hover {
+      color: var(--brand-green);
+    }
+
+    main {
+      padding: 58px 0 84px;
+    }
+
+    .assessment-shell {
+      width: min(860px, 100%);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      color: var(--brand-green);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      font-weight: 400;
+      letter-spacing: -0.04em;
+    }
+
+    h1 {
+      margin-top: 16px;
+      font-size: clamp(40px, 5.4vw, 64px);
+      line-height: 1.04;
+    }
+
+    .intro {
+      max-width: 680px;
+      margin: 20px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .progress-wrap {
+      margin-top: 38px;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e9efec;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--brand-green);
+      transition: width 0.25s ease;
+    }
+
+    .question-card {
+      margin-top: 34px;
+      padding: 36px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--white);
+      box-shadow: 0 12px 28px rgba(33, 79, 75, 0.06);
+    }
+
+    .question-number {
+      color: var(--brand-green);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .question-card h2 {
+      margin-top: 12px;
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.08;
+    }
+
+    .question-help {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .options {
+      display: grid;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .option {
+      width: 100%;
+      min-height: 66px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--text);
+      text-align: left;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .option:hover {
+      border-color: var(--brand-green);
+      background: var(--surface-green);
+    }
+
+    .option.selected {
+      border-color: var(--brand-green);
+      background: var(--surface-green);
+      box-shadow: 0 0 0 2px rgba(13, 155, 89, 0.09);
+    }
+
+    .option-marker {
+      width: 24px;
+      height: 24px;
+      flex: 0 0 24px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: transparent;
+      font-size: 13px;
+    }
+
+    .option.selected .option-marker {
+      border-color: var(--brand-green);
+      background: var(--brand-green);
+      color: var(--white);
+    }
+
+    .option-title {
+      font-size: 17px;
+      font-weight: 500;
+    }
+
+    .option-copy {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .button {
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    .button-primary {
+      border: 1px solid var(--brand-dark);
+      background: var(--brand-dark);
+      color: var(--white);
+    }
+
+    .button-primary:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+    }
+
+    .button-secondary {
+      border: 1px solid var(--border);
+      background: var(--white);
+      color: var(--text);
+    }
+
+    .result {
+      display: none;
+      margin-top: 34px;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .result-panel {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--white);
+      box-shadow: 0 12px 28px rgba(33, 79, 75, 0.06);
+    }
+
+    .result-hero {
+      padding: 38px;
+      background: var(--brand-dark);
+      color: var(--white);
+    }
+
+    .result-label {
+      color: #71d49a;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .result-hero h2 {
+      margin-top: 12px;
+      max-width: 680px;
+      font-size: clamp(34px, 4.8vw, 54px);
+      line-height: 1.06;
+    }
+
+    .result-summary {
+      max-width: 690px;
+      margin-top: 16px;
+      color: rgba(255,255,255,0.80);
+      font-size: 18px;
+    }
+
+    .result-body {
+      padding: 34px 38px 38px;
+    }
+
+    .result-body h3 {
+      font-size: 26px;
+    }
+
+    .next-steps {
+      display: grid;
+      gap: 0;
+      margin-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .next-step {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--surface-green);
+      color: var(--brand-green);
+      font-weight: 500;
+    }
+
+    .step-title {
+      color: var(--brand-green);
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .step-copy {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .result-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .disclaimer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 680px) {
+      .container {
+        width: min(100% - 28px, 1120px);
+      }
+
+      header {
+        height: 72px;
+      }
+
+      .logo-mark {
+        width: 36px;
+        height: 36px;
+      }
+
+      .logo-name {
+        font-size: 25px;
+      }
+
+      main {
+        padding-top: 42px;
+      }
+
+      .question-card,
+      .result-hero,
+      .result-body {
+        padding: 26px 22px;
+      }
+
+      .controls {
+        flex-direction: column-reverse;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .back-link {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <a class="logo-wrap" href="index.html" aria-label="DSALTA home">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="logo-name">DSALTA</span>
+      </a>
+
+      <a class="back-link" href="index.html">Back to Playbook</a>
+    </header>
+  </div>
+
+  <main>
+    <div class="container">
+      <div class="assessment-shell">
+        <div id="assessmentIntro">
+          <div class="eyebrow">Readiness Assessment</div>
+          <h1>Find the right next step for your company.</h1>
+          <p class="intro">
+            Answer a few questions about what triggered compliance, where you are today,
+            and how quickly you need to move.
+          </p>
+        </div>
+
+        <div class="progress-wrap" id="progressWrap">
+          <div class="progress-meta">
+            <span id="progressText">Question 1 of 7</span>
+            <span id="progressPercent">14%</span>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+        </div>
+
+        <section class="question-card" id="questionCard">
+          <div class="question-number" id="questionNumber"></div>
+          <h2 id="questionTitle"></h2>
+          <p class="question-help" id="questionHelp"></p>
+          <div class="options" id="options"></div>
+
+          <div class="controls">
+            <button class="button button-secondary" id="backButton" type="button">Back</button>
+            <button class="button button-primary" id="nextButton" type="button" disabled>Continue</button>
+          </div>
+        </section>
+
+        <section class="result" id="result">
+          <div class="result-panel">
+            <div class="result-hero">
+              <div class="result-label">Your recommended path</div>
+              <h2 id="resultTitle"></h2>
+              <p class="result-summary" id="resultSummary"></p>
+            </div>
+
+            <div class="result-body">
+              <h3>What to do next</h3>
+              <div class="next-steps" id="nextSteps"></div>
+
+              <div class="result-actions">
+                <button class="button button-primary" type="button">Book Founder Office Hours</button>
+                <button class="button button-secondary" id="restartButton" type="button">Retake Assessment</button>
+              </div>
+
+              <div class="disclaimer">
+                This assessment is an initial planning tool, not legal or audit advice.
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const questions = [
+      {
+        title: "What brought compliance onto your radar?",
+        help: "Choose the event that most closely matches your situation.",
+        options: [
+          { label: "An enterprise customer asked for SOC 2", value: "customer", urgency: 3 },
+          { label: "A deal is blocked by a security review", value: "blocked", urgency: 4 },
+          { label: "We are preparing for enterprise sales", value: "prepare", urgency: 2 },
+          { label: "A customer requires HIPAA", value: "hipaa", urgency: 3 },
+          { label: "We are exploring compliance proactively", value: "explore", urgency: 1 },
+          { label: "I am not sure what we need", value: "unsure", urgency: 0 }
+        ]
+      },
+      {
+        title: "Where is your company today?",
+        help: "This helps determine how much structure is appropriate.",
+        options: [
+          { label: "Pre-revenue or pre-launch", value: "prelaunch", maturity: 0 },
+          { label: "Early customers, mostly startups or SMBs", value: "early", maturity: 1 },
+          { label: "Enterprise opportunities are entering the pipeline", value: "pipeline", maturity: 2 },
+          { label: "We already sell to enterprise customers", value: "enterprise", maturity: 3 }
+        ]
+      },
+      {
+        title: "Which requirement are you navigating?",
+        help: "Choose the closest answer. You do not need to know the framework yet.",
+        options: [
+          { label: "SOC 2", value: "soc2" },
+          { label: "HIPAA", value: "hipaa" },
+          { label: "SOC 2 and HIPAA", value: "both" },
+          { label: "Security questionnaires or vendor reviews", value: "questionnaires" },
+          { label: "I am not sure", value: "unsure" }
+        ]
+      },
+      {
+        title: "How quickly do you need to show progress?",
+        help: "Use the timeline your buyer, investor, or team is working against.",
+        options: [
+          { label: "Less than 30 days", value: "30", urgency: 4 },
+          { label: "30 to 90 days", value: "90", urgency: 3 },
+          { label: "Three to six months", value: "180", urgency: 2 },
+          { label: "No fixed deadline yet", value: "open", urgency: 0 }
+        ]
+      },
+      {
+        title: "What is already in place?",
+        help: "Choose the answer that best reflects your current operating reality.",
+        options: [
+          { label: "Nothing formal yet", value: "none", maturity: 0 },
+          { label: "Some policies or controls exist", value: "some", maturity: 1 },
+          { label: "We use a compliance platform, but progress is inconsistent", value: "platform", maturity: 2 },
+          { label: "Most controls and evidence are already organized", value: "organized", maturity: 3 },
+          { label: "An audit is already underway", value: "audit", maturity: 4 }
+        ]
+      },
+      {
+        title: "Who owns compliance internally?",
+        help: "Ownership has a major effect on speed and follow-through.",
+        options: [
+          { label: "A founder", value: "founder", capacity: 1 },
+          { label: "Operations, IT, or security", value: "operator", capacity: 2 },
+          { label: "A dedicated compliance or security lead", value: "dedicated", capacity: 3 },
+          { label: "No one clearly owns it", value: "none", capacity: 0 }
+        ]
+      },
+      {
+        title: "What outcome matters most right now?",
+        help: "This determines the most useful starting point.",
+        options: [
+          { label: "Unblock a specific deal", value: "deal", urgency: 4 },
+          { label: "Become audit-ready as quickly as possible", value: "audit", urgency: 3 },
+          { label: "Answer security questionnaires with confidence", value: "questionnaires", urgency: 2 },
+          { label: "Choose the right compliance approach", value: "choose", urgency: 1 },
+          { label: "Understand what matters and what can wait", value: "clarity", urgency: 0 }
+        ]
+      }
+    ];
+
+    const state = {
+      current: 0,
+      answers: []
+    };
+
+    const questionNumber = document.getElementById("questionNumber");
+    const questionTitle = document.getElementById("questionTitle");
+    const questionHelp = document.getElementById("questionHelp");
+    const optionsContainer = document.getElementById("options");
+    const nextButton = document.getElementById("nextButton");
+    const backButton = document.getElementById("backButton");
+    const progressText = document.getElementById("progressText");
+    const progressPercent = document.getElementById("progressPercent");
+    const progressBar = document.getElementById("progressBar");
+    const questionCard = document.getElementById("questionCard");
+    const progressWrap = document.getElementById("progressWrap");
+    const assessmentIntro = document.getElementById("assessmentIntro");
+    const result = document.getElementById("result");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultSummary = document.getElementById("resultSummary");
+    const nextSteps = document.getElementById("nextSteps");
+    const restartButton = document.getElementById("restartButton");
+
+    function renderQuestion() {
+      const question = questions[state.current];
+      const selected = state.answers[state.current];
+      const percent = Math.round(((state.current + 1) / questions.length) * 100);
+
+      questionNumber.textContent = `Question ${state.current + 1}`;
+      questionTitle.textContent = question.title;
+      questionHelp.textContent = question.help;
+      progressText.textContent = `Question ${state.current + 1} of ${questions.length}`;
+      progressPercent.textContent = `${percent}%`;
+      progressBar.style.width = `${percent}%`;
+      backButton.style.visibility = state.current === 0 ? "hidden" : "visible";
+      nextButton.textContent = state.current === questions.length - 1 ? "See My Recommendation" : "Continue";
+      nextButton.disabled = !selected;
+
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "option";
+        if (selected && selected.value === option.value) {
+          button.classList.add("selected");
+        }
+
+        button.innerHTML = `
+          <span class="option-marker">✓</span>
+          <span>
+            <span class="option-title">${option.label}</span>
+          </span>
+        `;
+
+        button.addEventListener("click", () => {
+          state.answers[state.current] = option;
+          renderQuestion();
+        });
+
+        optionsContainer.appendChild(button);
+      });
+    }
+
+    function calculateResult() {
+      const urgency = state.answers.reduce((sum, answer) => sum + (answer.urgency || 0), 0);
+      const maturity = state.answers.reduce((sum, answer) => sum + (answer.maturity || 0), 0);
+      const capacity = state.answers.reduce((sum, answer) => sum + (answer.capacity || 0), 0);
+
+      const trigger = state.answers[0]?.value;
+      const framework = state.answers[2]?.value;
+      const timeline = state.answers[3]?.value;
+      const outcome = state.answers[6]?.value;
+
+      let title = "";
+      let summary = "";
+      let steps = [];
+
+      if (framework === "unsure" || trigger === "unsure" || outcome === "clarity") {
+        title = "Clarify the requirement before buying a platform.";
+        summary = "Your first move is not automation. It is confirming what the buyer, investor, or business actually requires so you can avoid unnecessary work.";
+        steps = [
+          ["Confirm the trigger", "Ask the requesting party exactly which framework, report type, and deadline they require."],
+          ["Map the minimum path", "Separate what is required now from controls and documentation that can wait."],
+          ["Create a focused plan", "Turn the confirmed requirement into owners, milestones, and a realistic timeline."]
+        ];
+      } else if (framework === "hipaa" || framework === "both") {
+        title = "Start a guided HIPAA and security readiness path.";
+        summary = "You have a defined regulatory requirement. The fastest route is a structured plan that connects policies, technical controls, evidence, and ownership.";
+        steps = [
+          ["Define scope", "Confirm which systems, data flows, vendors, and teams handle protected health information."],
+          ["Assign control ownership", "Give every required policy, safeguard, and evidence item a clear owner."],
+          ["Build an evidence rhythm", "Collect proof as work is completed so readiness does not become a last-minute scramble."]
+        ];
+      } else if (urgency >= 10 || timeline === "30" || trigger === "blocked" || outcome === "deal") {
+        title = "Move immediately with a deal-focused readiness sprint.";
+        summary = "Your compliance work is tied directly to revenue. Prioritize the controls, evidence, and buyer responses that unblock the opportunity without creating unnecessary overhead.";
+        steps = [
+          ["Identify the blocking requirement", "Confirm what the buyer needs to move forward and which items can be handled in parallel."],
+          ["Run a focused gap assessment", "Compare the current state against the required controls and assign owners immediately."],
+          ["Create buyer-visible progress", "Organize evidence, questionnaire responses, and a clear timeline the customer can trust."]
+        ];
+      } else if (maturity <= 2 || capacity <= 1) {
+        title = "Build the compliance foundation before the pressure increases.";
+        summary = "You are early enough to create a clean operating system before customer requests become urgent. Start with scope, ownership, and the controls most likely to affect enterprise sales.";
+        steps = [
+          ["Choose the first framework", "Base the decision on customer requirements, data handled, and near-term sales goals."],
+          ["Set ownership", "Assign one accountable owner and define where policies, evidence, and tasks will live."],
+          ["Implement in stages", "Start with high-impact controls and add complexity only when the business requires it."]
+        ];
+      } else {
+        title = "Turn existing progress into an audit-ready system.";
+        summary = "You already have meaningful pieces in place. The priority now is closing gaps, standardizing evidence, and creating a reliable path to audit readiness.";
+        steps = [
+          ["Validate control coverage", "Confirm that existing policies and controls align with the selected framework and current scope."],
+          ["Centralize evidence", "Bring scattered documents, screenshots, tickets, and approvals into one traceable system."],
+          ["Prepare for audit", "Resolve open gaps, test evidence quality, and establish a realistic audit timeline."]
+        ];
+      }
+
+      return { title, summary, steps };
+    }
+
+    function showResult() {
+      const recommendation = calculateResult();
+
+      assessmentIntro.style.display = "none";
+      progressWrap.style.display = "none";
+      questionCard.style.display = "none";
+      result.classList.add("show");
+
+      resultTitle.textContent = recommendation.title;
+      resultSummary.textContent = recommendation.summary;
+      nextSteps.innerHTML = "";
+
+      recommendation.steps.forEach((step, index) => {
+        const item = document.createElement("div");
+        item.className = "next-step";
+        item.innerHTML = `
+          <div class="step-number">${index + 1}</div>
+          <div>
+            <div class="step-title">${step[0]}</div>
+            <div class="step-copy">${step[1]}</div>
+          </div>
+        `;
+        nextSteps.appendChild(item);
+      });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    nextButton.addEventListener("click", () => {
+      if (!state.answers[state.current]) return;
+
+      if (state.current === questions.length - 1) {
+        showResult();
+        return;
+      }
+
+      state.current += 1;
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    backButton.addEventListener("click", () => {
+      if (state.current === 0) return;
+      state.current -= 1;
+      renderQuestion();
+    });
+
+    restartButton.addEventListener("click", () => {
+      state.current = 0;
+      state.answers = [];
+      result.classList.remove("show");
+      assessmentIntro.style.display = "block";
+      progressWrap.style.display = "block";
+      questionCard.style.display = "block";
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    renderQuestion();
+  </script>
+</body>
+</html>
