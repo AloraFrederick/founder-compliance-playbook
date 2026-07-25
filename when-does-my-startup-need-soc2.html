@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>When Does My Startup Need SOC 2? | DSALTA</title>
+
+  <style>
+    :root {
+      --bg:#ffffff;
+      --surface:#f8faf9;
+      --surface-green:#f1faf5;
+      --text:#343946;
+      --muted:#596273;
+      --border:#dfe8e4;
+      --brand-dark:#214f4b;
+      --brand-green:#0d9b59;
+      --bright:#1bc072;
+      --white:#ffffff;
+    }
+
+    * { box-sizing:border-box; }
+
+    html { scroll-behavior:smooth; }
+
+    body {
+      margin:0;
+      font-family:"Apfel Grotezk","Aptos","Helvetica Neue",Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    a { color:inherit; }
+
+    .container {
+      width:min(1160px,calc(100% - 48px));
+      margin:0 auto;
+    }
+
+    header {
+      height:84px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom:1px solid var(--border);
+    }
+
+    .logo-wrap {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      color:var(--brand-dark);
+      text-decoration:none;
+    }
+
+    .logo-mark {
+      position:relative;
+      width:42px;
+      height:42px;
+      border:3px solid var(--brand-dark);
+    }
+
+    .logo-mark::after {
+      content:"*";
+      position:absolute;
+      right:-11px;
+      top:-17px;
+      padding:0 2px;
+      background:#fff;
+      color:var(--brand-green);
+      font-size:28px;
+      line-height:1;
+    }
+
+    .logo-name {
+      font-size:29px;
+      font-weight:500;
+      letter-spacing:-0.045em;
+    }
+
+    .header-actions {
+      display:flex;
+      gap:18px;
+      align-items:center;
+    }
+
+    .header-link {
+      color:var(--brand-dark);
+      text-decoration:none;
+      font-size:15px;
+    }
+
+    .header-link:hover { color:var(--brand-green); }
+
+    .hero {
+      padding:76px 0 64px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .breadcrumb {
+      color:var(--brand-green);
+      font-size:13px;
+      text-decoration:none;
+    }
+
+    h1,h2,h3 {
+      margin:0;
+      font-weight:400;
+      letter-spacing:-0.04em;
+    }
+
+    h1 {
+      max-width:900px;
+      margin-top:18px;
+      font-size:clamp(48px,6.2vw,76px);
+      line-height:1.03;
+    }
+
+    .hero-copy {
+      max-width:760px;
+      margin-top:24px;
+      color:var(--muted);
+      font-size:20px;
+    }
+
+    .hero-summary {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:0;
+      margin-top:38px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      overflow:hidden;
+      background:#fff;
+    }
+
+    .summary-item {
+      padding:24px;
+      border-right:1px solid var(--border);
+    }
+
+    .summary-item:last-child { border-right:0; }
+
+    .summary-label {
+      color:var(--brand-green);
+      font-size:12px;
+      font-weight:500;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    .summary-value {
+      margin-top:8px;
+      font-size:18px;
+      line-height:1.3;
+    }
+
+    .article-layout {
+      display:grid;
+      grid-template-columns:240px minmax(0,760px);
+      gap:64px;
+      align-items:start;
+      padding:72px 0 90px;
+    }
+
+    .toc {
+      position:sticky;
+      top:28px;
+      border-left:2px solid var(--border);
+      padding-left:18px;
+    }
+
+    .toc-label {
+      color:var(--brand-green);
+      font-size:12px;
+      font-weight:500;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    .toc a {
+      display:block;
+      margin-top:14px;
+      color:var(--muted);
+      text-decoration:none;
+      font-size:14px;
+      line-height:1.35;
+    }
+
+    .toc a:hover { color:var(--brand-green); }
+
+    .article p {
+      margin:18px 0 0;
+      color:var(--muted);
+      font-size:18px;
+    }
+
+    .article h2 {
+      margin-top:62px;
+      font-size:clamp(34px,4vw,48px);
+      line-height:1.08;
+    }
+
+    .article h3 {
+      margin-top:34px;
+      font-size:27px;
+      line-height:1.15;
+    }
+
+    .article ul {
+      margin:20px 0 0;
+      padding-left:22px;
+      color:var(--muted);
+      font-size:17px;
+    }
+
+    .article li + li { margin-top:10px; }
+
+    .callout {
+      margin-top:34px;
+      padding:28px;
+      border:1px solid var(--border);
+      border-left:4px solid var(--brand-green);
+      border-radius:8px;
+      background:var(--surface-green);
+    }
+
+    .callout strong {
+      display:block;
+      color:var(--brand-green);
+      font-size:20px;
+      font-weight:500;
+    }
+
+    .callout p {
+      margin-top:8px;
+      font-size:16px;
+    }
+
+    .signal-grid {
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      margin-top:28px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      overflow:hidden;
+    }
+
+    .signal {
+      min-height:190px;
+      padding:26px;
+      border-right:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      background:#fff;
+    }
+
+    .signal:nth-child(2n) { border-right:0; }
+    .signal:nth-last-child(-n+2) { border-bottom:0; }
+
+    .signal-number {
+      width:38px;
+      height:38px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:var(--surface-green);
+      color:var(--brand-green);
+      font-weight:500;
+    }
+
+    .signal h3 {
+      margin-top:18px;
+      color:var(--brand-green);
+      font-size:23px;
+    }
+
+    .signal p {
+      margin-top:10px;
+      font-size:16px;
+    }
+
+    .stage-table {
+      margin-top:28px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      overflow:hidden;
+    }
+
+    .stage-row {
+      display:grid;
+      grid-template-columns:180px 1fr 1fr;
+      border-bottom:1px solid var(--border);
+      background:#fff;
+    }
+
+    .stage-row:last-child { border-bottom:0; }
+
+    .stage-row > div {
+      padding:20px;
+      border-right:1px solid var(--border);
+    }
+
+    .stage-row > div:last-child { border-right:0; }
+
+    .stage-head {
+      background:var(--surface);
+      color:var(--brand-green);
+      font-size:12px;
+      font-weight:500;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    .stage-name {
+      color:var(--text);
+      font-weight:500;
+    }
+
+    .stage-copy {
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .decision-box {
+      margin-top:34px;
+      padding:32px;
+      border-radius:10px;
+      background:var(--brand-dark);
+      color:#fff;
+    }
+
+    .decision-box h3 {
+      margin:0;
+      color:#fff;
+      font-size:30px;
+    }
+
+    .decision-box p {
+      color:rgba(255,255,255,.8);
+      font-size:17px;
+    }
+
+    .decision-list {
+      display:grid;
+      gap:12px;
+      margin-top:22px;
+    }
+
+    .decision-item {
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      color:rgba(255,255,255,.9);
+    }
+
+    .decision-check {
+      flex:0 0 24px;
+      width:24px;
+      height:24px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:var(--bright);
+      color:var(--brand-dark);
+      font-weight:700;
+    }
+
+    .faq {
+      margin-top:28px;
+      border-top:1px solid var(--border);
+    }
+
+    details {
+      border-bottom:1px solid var(--border);
+      padding:20px 0;
+    }
+
+    summary {
+      cursor:pointer;
+      color:var(--text);
+      font-size:19px;
+      font-weight:500;
+      list-style:none;
+    }
+
+    summary::-webkit-details-marker { display:none; }
+
+    details p {
+      margin-top:12px !important;
+      font-size:16px !important;
+    }
+
+    .cta {
+      margin-top:64px;
+      padding:34px;
+      border-radius:10px;
+      background:var(--surface-green);
+      border:1px solid var(--border);
+    }
+
+    .cta h3 {
+      margin:0;
+      color:var(--brand-green);
+      font-size:30px;
+    }
+
+    .cta-actions {
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:24px;
+    }
+
+    .button {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:0 18px;
+      border-radius:6px;
+      text-decoration:none;
+      font-weight:500;
+    }
+
+    .button-primary {
+      background:var(--brand-green);
+      color:#fff;
+    }
+
+    .button-secondary {
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--text);
+    }
+
+    .sources {
+      margin-top:42px;
+      padding-top:24px;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    footer {
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      padding:24px 0;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    @media (max-width:900px) {
+      .article-layout {
+        grid-template-columns:1fr;
+      }
+
+      .toc {
+        position:static;
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:10px 20px;
+        border-left:0;
+        border-bottom:1px solid var(--border);
+        padding:0 0 24px;
+      }
+
+      .toc-label { grid-column:1/-1; }
+
+      .toc a { margin:0; }
+
+      .hero-summary { grid-template-columns:1fr; }
+
+      .summary-item {
+        border-right:0;
+        border-bottom:1px solid var(--border);
+      }
+
+      .summary-item:last-child { border-bottom:0; }
+    }
+
+    @media (max-width:680px) {
+      .container {
+        width:min(100% - 28px,1160px);
+      }
+
+      header { height:72px; }
+
+      .header-actions { display:none; }
+
+      .hero { padding:58px 0 50px; }
+
+      .article-layout { padding:52px 0 70px; }
+
+      .signal-grid { grid-template-columns:1fr; }
+
+      .signal,
+      .signal:nth-child(2n),
+      .signal:nth-last-child(-n+2) {
+        border-right:0;
+        border-bottom:1px solid var(--border);
+      }
+
+      .signal:last-child { border-bottom:0; }
+
+      .stage-row {
+        grid-template-columns:1fr;
+      }
+
+      .stage-row > div {
+        border-right:0;
+        border-bottom:1px solid var(--border);
+      }
+
+      .stage-row > div:last-child { border-bottom:0; }
+
+      footer { flex-direction:column; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <a class="logo-wrap" href="index.html">
+        <span class="logo-mark"></span>
+        <span class="logo-name">DSALTA</span>
+      </a>
+
+      <nav class="header-actions">
+        <a class="header-link" href="playbook.html">Browse Playbook</a>
+        <a class="header-link" href="readiness-assessment.html">Readiness Assessment</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <a class="breadcrumb" href="playbook.html">Start Here / SOC 2</a>
+      <h1>When does my startup need SOC 2?</h1>
+      <p class="hero-copy">
+        Most startups do not need SOC 2 on day one. They need it when security proof
+        becomes part of selling, partnering, or earning trust.
+      </p>
+
+      <div class="hero-summary">
+        <div class="summary-item">
+          <div class="summary-label">Start preparing</div>
+          <div class="summary-value">Before the first deal is blocked</div>
+        </div>
+
+        <div class="summary-item">
+          <div class="summary-label">Act immediately</div>
+          <div class="summary-value">When a buyer makes it a requirement</div>
+        </div>
+
+        <div class="summary-item">
+          <div class="summary-label">What matters most</div>
+          <div class="summary-value">Timing, scope, and buyer expectations</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="container">
+    <main class="article-layout">
+      <aside class="toc" aria-label="Article navigation">
+        <div class="toc-label">In this guide</div>
+        <a href="#short-answer">The short answer</a>
+        <a href="#signals">Four signals</a>
+        <a href="#stages">By company stage</a>
+        <a href="#wait">When it can wait</a>
+        <a href="#prepare">What to prepare first</a>
+        <a href="#faq">Common questions</a>
+      </aside>
+
+      <article class="article">
+        <section id="short-answer">
+          <h2>The short answer</h2>
+          <p>
+            Your startup usually needs SOC 2 when customers, partners, or investors
+            need independent assurance that your controls protect their data and support
+            reliable service delivery.
+          </p>
+          <p>
+            A SOC 2 report is designed for service organizations whose customers need
+            information about controls relevant to security, availability, processing
+            integrity, confidentiality, or privacy. It is not a legal requirement for
+            every startup, and it is not automatically the right first step for every
+            company. The business trigger matters.
+          </p>
+
+          <div class="callout">
+            <strong>Do not start with the audit.</strong>
+            <p>
+              Start by confirming who is asking, what they require, which systems are in
+              scope, and when the requirement affects revenue or delivery.
+            </p>
+          </div>
+        </section>
+
+        <section id="signals">
+          <h2>Four signals that it is time to act</h2>
+
+          <div class="signal-grid">
+            <div class="signal">
+              <div class="signal-number">1</div>
+              <h3>A customer asks for it</h3>
+              <p>
+                The clearest signal is a buyer who requires a SOC 2 report before signing,
+                renewing, or expanding.
+              </p>
+            </div>
+
+            <div class="signal">
+              <div class="signal-number">2</div>
+              <h3>Security reviews are slowing sales</h3>
+              <p>
+                Repeated questionnaires, evidence requests, and follow-up calls are
+                consuming founder and engineering time.
+              </p>
+            </div>
+
+            <div class="signal">
+              <div class="signal-number">3</div>
+              <h3>Your customer profile is changing</h3>
+              <p>
+                Larger or more regulated buyers expect stronger proof of security,
+                ownership, and operational discipline.
+              </p>
+            </div>
+
+            <div class="signal">
+              <div class="signal-number">4</div>
+              <h3>You handle sensitive customer data</h3>
+              <p>
+                The more valuable, confidential, or operationally important the data,
+                the more likely customers will require independent assurance.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="stages">
+          <h2>SOC 2 by company stage</h2>
+          <p>
+            The right timing depends less on headcount and more on your customers,
+            sales motion, data exposure, and contractual requirements.
+          </p>
+
+          <div class="stage-table">
+            <div class="stage-row stage-head">
+              <div>Stage</div>
+              <div>What to do now</div>
+              <div>What can wait</div>
+            </div>
+
+            <div class="stage-row">
+              <div class="stage-name">Pre-launch</div>
+              <div class="stage-copy">Use sensible security practices and document key decisions.</div>
+              <div class="stage-copy">A full SOC 2 examination unless a partner or launch customer requires it.</div>
+            </div>
+
+            <div class="stage-row">
+              <div class="stage-name">Early customers</div>
+              <div class="stage-copy">Track common buyer questions and define basic control ownership.</div>
+              <div class="stage-copy">Complex tooling that exceeds your current customer requirements.</div>
+            </div>
+
+            <div class="stage-row">
+              <div class="stage-name">Enterprise pipeline</div>
+              <div class="stage-copy">Confirm report expectations, define scope, and begin readiness work.</div>
+              <div class="stage-copy">Waiting until procurement has already blocked the deal.</div>
+            </div>
+
+            <div class="stage-row">
+              <div class="stage-name">Enterprise customers</div>
+              <div class="stage-copy">Maintain evidence continuously and align controls with buyer expectations.</div>
+              <div class="stage-copy">Treating compliance as a one-time project.</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="wait">
+          <h2>When SOC 2 can wait</h2>
+          <p>
+            Starting too early can create unnecessary cost and operational overhead.
+            It may be reasonable to wait when:
+          </p>
+
+          <ul>
+            <li>No customer, partner, or investor is requesting independent assurance.</li>
+            <li>Your current sales motion does not involve formal security review.</li>
+            <li>Your product scope and infrastructure are still changing substantially.</li>
+            <li>You have not confirmed whether SOC 2 is the actual buyer requirement.</li>
+            <li>A narrower security improvement would solve the immediate problem.</li>
+          </ul>
+
+          <p>
+            Waiting does not mean ignoring security. It means building only the level of
+            structure the business needs now while preparing for the next stage.
+          </p>
+        </section>
+
+        <section id="prepare">
+          <h2>What to prepare before beginning</h2>
+          <p>
+            You do not need everything complete before starting. You do need enough
+            clarity to avoid wasted work.
+          </p>
+
+          <div class="decision-box">
+            <h3>Confirm these five things first</h3>
+            <p>
+              A focused answer to each question is more valuable than buying software
+              before the requirement is clear.
+            </p>
+
+            <div class="decision-list">
+              <div class="decision-item">
+                <span class="decision-check">✓</span>
+                <span>Who is requesting the report?</span>
+              </div>
+              <div class="decision-item">
+                <span class="decision-check">✓</span>
+                <span>What report type or evidence do they expect?</span>
+              </div>
+              <div class="decision-item">
+                <span class="decision-check">✓</span>
+                <span>Which products, systems, people, and vendors are in scope?</span>
+              </div>
+              <div class="decision-item">
+                <span class="decision-check">✓</span>
+                <span>What deadline affects the deal or customer relationship?</span>
+              </div>
+              <div class="decision-item">
+                <span class="decision-check">✓</span>
+                <span>Who will own controls, evidence, and follow-through?</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cta">
+            <h3>Not sure whether it is time?</h3>
+            <p>
+              Take the readiness assessment to get a recommended starting point based on
+              your company stage, buyer requirements, timeline, and current controls.
+            </p>
+
+            <div class="cta-actions">
+              <a class="button button-primary" href="readiness-assessment.html">Start Readiness Assessment</a>
+              <a class="button button-secondary" href="playbook.html">Browse More Guides</a>
+            </div>
+          </div>
+        </section>
+
+        <section id="faq">
+          <h2>Common questions</h2>
+
+          <div class="faq">
+            <details>
+              <summary>Is SOC 2 legally required?</summary>
+              <p>
+                Not generally. SOC 2 is commonly requested through commercial,
+                procurement, or risk-management processes rather than imposed as a
+                universal legal requirement.
+              </p>
+            </details>
+
+            <details>
+              <summary>Do all startups need SOC 2?</summary>
+              <p>
+                No. The need depends on your customer requirements, the services you
+                provide, the data you handle, and the markets you are entering.
+              </p>
+            </details>
+
+            <details>
+              <summary>Should we get SOC 2 before selling to enterprise customers?</summary>
+              <p>
+                You should begin preparing before formal security review becomes a
+                blocker. Whether you need a completed report before selling depends on
+                the buyer and the deal.
+              </p>
+            </details>
+
+            <details>
+              <summary>Can a startup start with SOC 2 Type I?</summary>
+              <p>
+                Many startups use a Type I report as an earlier milestone because it
+                addresses control design at a point in time. The right path depends on
+                what the customer requires and the company’s readiness.
+              </p>
+            </details>
+          </div>
+        </section>
+
+        <div class="sources">
+          Source basis: AICPA & CIMA materials describing SOC 2 examinations for service
+          organizations and controls relevant to security, availability, processing
+          integrity, confidentiality, and privacy. This prototype provides general
+          educational guidance and is not legal or audit advice.
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <div class="container">
+    <footer>
+      <div>DSALTA Founder Compliance Playbook</div>
+      <div>Prototype for discussion purposes only.</div>
+    </footer>
+  </div>
+</body>
+</html>
