@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Compliance Timeline Planner | DSALTA</title>
+
+  <style>
+    :root {
+      --bg:#ffffff;
+      --surface:#f8faf9;
+      --surface-green:#f1faf5;
+      --text:#343946;
+      --muted:#596273;
+      --border:#dfe8e4;
+      --brand-dark:#214f4b;
+      --brand-green:#0d9b59;
+      --brand-green-dark:#087944;
+      --brand-green-light:#e8f7ef;
+      --bright:#1bc072;
+      --warning:#996d16;
+      --warning-bg:#fff8e8;
+      --danger:#9a3a3a;
+      --danger-bg:#fff0f0;
+      --white:#ffffff;
+    }
+
+    * { box-sizing:border-box; }
+
+    html { scroll-behavior:smooth; }
+
+    body {
+      margin:0;
+      font-family:"Apfel Grotezk","Aptos","Helvetica Neue",Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    button,input,select { font:inherit; }
+
+    button { cursor:pointer; }
+
+    a { color:inherit; }
+
+    .container {
+      width:min(1160px,calc(100% - 48px));
+      margin:0 auto;
+    }
+
+    header {
+      height:84px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom:1px solid var(--border);
+    }
+
+    .logo-wrap {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      color:var(--brand-dark);
+      text-decoration:none;
+    }
+
+    .logo-mark {
+      position:relative;
+      width:42px;
+      height:42px;
+      border:3px solid var(--brand-dark);
+    }
+
+    .logo-mark::after {
+      content:"*";
+      position:absolute;
+      right:-11px;
+      top:-17px;
+      padding:0 2px;
+      background:#fff;
+      color:var(--brand-green);
+      font-size:28px;
+      line-height:1;
+    }
+
+    .logo-name {
+      font-size:29px;
+      font-weight:500;
+      letter-spacing:-0.045em;
+    }
+
+    .header-actions {
+      display:flex;
+      gap:18px;
+      align-items:center;
+    }
+
+    .header-link {
+      text-decoration:none;
+      font-size:15px;
+      color:var(--brand-dark);
+    }
+
+    .header-link:hover { color:var(--brand-green); }
+
+    .hero {
+      padding:72px 0 56px;
+      text-align:center;
+    }
+
+    .eyebrow {
+      color:var(--brand-green);
+      font-size:12px;
+      font-weight:500;
+      letter-spacing:.15em;
+      text-transform:uppercase;
+    }
+
+    h1,h2,h3 {
+      margin:0;
+      font-weight:400;
+      letter-spacing:-0.04em;
+    }
+
+    h1 {
+      max-width:880px;
+      margin:18px auto 0;
+      font-size:clamp(46px,6vw,72px);
+      line-height:1.03;
+    }
+
+    .hero-copy {
+      max-width:760px;
+      margin:22px auto 0;
+      color:var(--muted);
+      font-size:19px;
+    }
+
+    .planner-shell {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+      gap:28px;
+      align-items:start;
+      padding:0 0 88px;
+    }
+
+    .panel {
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:#fff;
+      overflow:hidden;
+      box-shadow:0 12px 34px rgba(33,79,75,.06);
+    }
+
+    .panel-header {
+      padding:26px 28px;
+      border-bottom:1px solid var(--border);
+      background:var(--surface);
+    }
+
+    .panel-label {
+      color:var(--brand-green);
+      font-size:12px;
+      font-weight:500;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    .panel-title {
+      margin-top:8px;
+      font-size:31px;
+      line-height:1.1;
+    }
+
+    .panel-copy {
+      margin:10px 0 0;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .panel-body {
+      padding:28px;
+    }
+
+    .field {
+      margin-bottom:24px;
+    }
+
+    .field:last-child { margin-bottom:0; }
+
+    label {
+      display:block;
+      margin-bottom:9px;
+      color:var(--text);
+      font-size:15px;
+      font-weight:500;
+    }
+
+    .helper {
+      display:block;
+      margin-top:7px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    select,input[type="date"],input[type="email"] {
+      width:100%;
+      height:50px;
+      padding:0 14px;
+      border:1px solid var(--border);
+      border-radius:7px;
+      background:#fff;
+      color:var(--text);
+      outline:none;
+    }
+
+    select:focus,input:focus {
+      border-color:var(--brand-green);
+      box-shadow:0 0 0 3px rgba(13,155,89,.1);
+    }
+
+    .choice-grid {
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+
+    .choice {
+      position:relative;
+    }
+
+    .choice input {
+      position:absolute;
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .choice label {
+      min-height:72px;
+      margin:0;
+      padding:14px;
+      border:1px solid var(--border);
+      border-radius:8px;
+      background:#fff;
+      color:var(--muted);
+      font-weight:400;
+      cursor:pointer;
+      transition:.16s ease;
+    }
+
+    .choice label strong {
+      display:block;
+      color:var(--text);
+      font-weight:500;
+      margin-bottom:3px;
+    }
+
+    .choice input:checked + label {
+      border-color:var(--brand-green);
+      background:var(--surface-green);
+      color:var(--brand-green-dark);
+      box-shadow:0 0 0 2px rgba(13,155,89,.08);
+    }
+
+    .button-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:8px;
+    }
+
+    .button {
+      min-height:48px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:0 18px;
+      border-radius:7px;
+      border:1px solid transparent;
+      text-decoration:none;
+      font-weight:500;
+    }
+
+    .button-primary {
+      background:var(--brand-green);
+      color:#fff;
+    }
+
+    .button-primary:hover { background:var(--brand-green-dark); }
+
+    .button-secondary {
+      background:#fff;
+      color:var(--text);
+      border-color:var(--border);
+    }
+
+    .results-empty {
+      min-height:620px;
+      display:grid;
+      place-items:center;
+      padding:40px;
+      text-align:center;
+      color:var(--muted);
+      background:linear-gradient(180deg,#fff 0%,var(--surface) 100%);
+    }
+
+    .results-empty-icon {
+      width:74px;
+      height:74px;
+      display:grid;
+      place-items:center;
+      margin:0 auto 18px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:#fff;
+      color:var(--brand-green);
+      font-size:31px;
+    }
+
+    .results {
+      display:none;
+    }
+
+    .results.active {
+      display:block;
+    }
+
+    .result-summary {
+      padding:28px;
+      border-bottom:1px solid var(--border);
+      background:var(--brand-dark);
+      color:#fff;
+    }
+
+    .result-summary .panel-label {
+      color:#71d49a;
+    }
+
+    .result-summary h2 {
+      margin-top:8px;
+      color:#fff;
+      font-size:38px;
+      line-height:1.06;
+    }
+
+    .result-summary p {
+      margin:12px 0 0;
+      color:rgba(255,255,255,.78);
+      font-size:16px;
+    }
+
+    .result-metrics {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      border-bottom:1px solid var(--border);
+    }
+
+    .metric {
+      padding:22px;
+      border-right:1px solid var(--border);
+      background:#fff;
+    }
+
+    .metric:last-child { border-right:0; }
+
+    .metric-label {
+      color:var(--brand-green);
+      font-size:11px;
+      font-weight:500;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    .metric-value {
+      margin-top:6px;
+      font-size:20px;
+      line-height:1.2;
+    }
+
+    .status-banner {
+      margin:24px 28px 0;
+      padding:18px;
+      border-radius:8px;
+      font-size:15px;
+    }
+
+    .status-good {
+      color:var(--brand-green-dark);
+      background:var(--surface-green);
+      border:1px solid rgba(13,155,89,.18);
+    }
+
+    .status-warning {
+      color:var(--warning);
+      background:var(--warning-bg);
+      border:1px solid rgba(153,109,22,.18);
+    }
+
+    .status-risk {
+      color:var(--danger);
+      background:var(--danger-bg);
+      border:1px solid rgba(154,58,58,.18);
+    }
+
+    .timeline {
+      padding:26px 28px 30px;
+    }
+
+    .timeline-title {
+      font-size:27px;
+      line-height:1.1;
+    }
+
+    .timeline-list {
+      position:relative;
+      margin-top:24px;
+    }
+
+    .timeline-list::before {
+      content:"";
+      position:absolute;
+      left:17px;
+      top:18px;
+      bottom:18px;
+      width:1px;
+      background:var(--border);
+    }
+
+    .milestone {
+      position:relative;
+      display:grid;
+      grid-template-columns:36px 1fr;
+      gap:16px;
+      padding-bottom:22px;
+    }
+
+    .milestone:last-child { padding-bottom:0; }
+
+    .milestone-dot {
+      position:relative;
+      z-index:1;
+      width:36px;
+      height:36px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:var(--surface-green);
+      border:1px solid rgba(13,155,89,.18);
+      color:var(--brand-green);
+      font-size:13px;
+      font-weight:500;
+    }
+
+    .milestone-card {
+      padding:16px 17px;
+      border:1px solid var(--border);
+      border-radius:8px;
+      background:#fff;
+    }
+
+    .milestone-top {
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .milestone-name {
+      font-size:18px;
+      font-weight:500;
+      line-height:1.2;
+    }
+
+    .milestone-weeks {
+      flex:0 0 auto;
+      color:var(--brand-green);
+      font-size:13px;
+    }
+
+    .milestone-copy {
+      margin:7px 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .bottlenecks {
+      padding:0 28px 28px;
+    }
+
+    .bottlenecks h3 {
+      font-size:25px;
+      line-height:1.1;
+    }
+
+    .bottleneck-list {
+      display:grid;
+      gap:10px;
+      margin-top:16px;
+    }
+
+    .bottleneck {
+      padding:14px 16px;
+      border:1px solid var(--border);
+      border-radius:7px;
+      background:var(--surface);
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .capture {
+      margin:0 28px 28px;
+      padding:24px;
+      border:1px solid var(--border);
+      border-radius:9px;
+      background:var(--surface-green);
+    }
+
+    .capture h3 {
+      color:var(--brand-green);
+      font-size:27px;
+      line-height:1.1;
+    }
+
+    .capture p {
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .capture-row {
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .success {
+      display:none;
+      margin-top:14px;
+      color:var(--brand-green-dark);
+      font-size:14px;
+      font-weight:500;
+    }
+
+    .success.active { display:block; }
+
+    footer {
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      padding:24px 0;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    @media (max-width:960px) {
+      .planner-shell {
+        grid-template-columns:1fr;
+      }
+
+      .results-empty { min-height:360px; }
+    }
+
+    @media (max-width:680px) {
+      .container {
+        width:min(100% - 28px,1160px);
+      }
+
+      header { height:72px; }
+
+      .header-actions { display:none; }
+
+      .hero { padding:56px 0 44px; }
+
+      .choice-grid { grid-template-columns:1fr; }
+
+      .result-metrics { grid-template-columns:1fr; }
+
+      .metric {
+        border-right:0;
+        border-bottom:1px solid var(--border);
+      }
+
+      .metric:last-child { border-bottom:0; }
+
+      .capture-row { grid-template-columns:1fr; }
+
+      footer { flex-direction:column; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <a class="logo-wrap" href="index.html">
+        <span class="logo-mark"></span>
+        <span class="logo-name">DSALTA</span>
+      </a>
+
+      <nav class="header-actions">
+        <a class="header-link" href="playbook.html">Browse Playbook</a>
+        <a class="header-link" href="readiness-assessment.html">Readiness Assessment</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">Interactive Tool</div>
+      <h1>Build your compliance timeline.</h1>
+      <p class="hero-copy">
+        Answer a few questions to generate an illustrative plan with milestones,
+        timing, likely bottlenecks, and a realistic starting point.
+      </p>
+    </section>
+
+    <main class="planner-shell">
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-label">Your inputs</div>
+          <h2 class="panel-title">Tell us where you are today.</h2>
+          <p class="panel-copy">The estimate updates based on readiness, ownership, urgency, and scope.</p>
+        </div>
+
+        <div class="panel-body">
+          <div class="field">
+            <label for="goal">What are you working toward?</label>
+            <select id="goal">
+              <option value="type1">SOC 2 Type I</option>
+              <option value="type2">SOC 2 Type II</option>
+              <option value="hipaa">HIPAA readiness</option>
+              <option value="unknown">Not sure yet</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>What best describes your current state?</label>
+            <div class="choice-grid">
+              <div class="choice">
+                <input type="radio" name="maturity" id="maturity-none" value="none" checked>
+                <label for="maturity-none"><strong>Nothing formal</strong>Security work is mostly ad hoc.</label>
+              </div>
+
+              <div class="choice">
+                <input type="radio" name="maturity" id="maturity-basic" value="basic">
+                <label for="maturity-basic"><strong>Basic controls</strong>Some policies and practices exist.</label>
+              </div>
+
+              <div class="choice">
+                <input type="radio" name="maturity" id="maturity-some" value="some">
+                <label for="maturity-some"><strong>Some structure</strong>Controls exist but evidence is incomplete.</label>
+              </div>
+
+              <div class="choice">
+                <input type="radio" name="maturity" id="maturity-ready" value="ready">
+                <label for="maturity-ready"><strong>Mostly organized</strong>Controls and evidence are largely in place.</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="size">Company size</label>
+            <select id="size">
+              <option value="small">1 to 10 employees</option>
+              <option value="growing">11 to 50 employees</option>
+              <option value="scale">51 to 200 employees</option>
+              <option value="large">More than 200 employees</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="owner">Who will own the work internally?</label>
+            <select id="owner">
+              <option value="none">No clear owner yet</option>
+              <option value="founder">Founder or executive</option>
+              <option value="technical">Engineering or security lead</option>
+              <option value="dedicated">Dedicated compliance owner</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Is a customer deal waiting?</label>
+            <div class="choice-grid">
+              <div class="choice">
+                <input type="radio" name="deal" id="deal-no" value="no" checked>
+                <label for="deal-no"><strong>No</strong>We are planning ahead.</label>
+              </div>
+
+              <div class="choice">
+                <input type="radio" name="deal" id="deal-yes" value="yes">
+                <label for="deal-yes"><strong>Yes</strong>A deal or renewal may depend on this.</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="deadline">Desired completion date</label>
+            <input type="date" id="deadline">
+            <span class="helper">Optional. Leave blank to receive a recommended target date.</span>
+          </div>
+
+          <div class="button-row">
+            <button class="button button-primary" id="generateButton" type="button">Generate My Timeline</button>
+            <button class="button button-secondary" id="resetButton" type="button">Reset</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="resultsPanel">
+        <div class="results-empty" id="emptyState">
+          <div>
+            <div class="results-empty-icon">◷</div>
+            <h2 class="panel-title">Your timeline will appear here.</h2>
+            <p class="panel-copy">Complete the questions and generate an illustrative implementation plan.</p>
+          </div>
+        </div>
+
+        <div class="results" id="results">
+          <div class="result-summary">
+            <div class="panel-label">Your estimated plan</div>
+            <h2 id="resultHeadline">A focused path to readiness</h2>
+            <p id="resultIntro"></p>
+          </div>
+
+          <div class="result-metrics">
+            <div class="metric">
+              <div class="metric-label">Estimated duration</div>
+              <div class="metric-value" id="durationMetric"></div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-label">Recommended start</div>
+              <div class="metric-value" id="startMetric"></div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-label">Target completion</div>
+              <div class="metric-value" id="completionMetric"></div>
+            </div>
+          </div>
+
+          <div class="status-banner" id="statusBanner"></div>
+
+          <div class="timeline">
+            <h3 class="timeline-title">Recommended milestones</h3>
+            <div class="timeline-list" id="timelineList"></div>
+          </div>
+
+          <div class="bottlenecks">
+            <h3>Likely bottlenecks</h3>
+            <div class="bottleneck-list" id="bottleneckList"></div>
+          </div>
+
+          <div class="capture">
+            <h3>Your personalized timeline is ready.</h3>
+            <p>Send the milestone plan, timing estimate, and recommended next steps to your inbox.</p>
+
+            <div class="capture-row">
+              <input type="email" id="email" placeholder="you@company.com" aria-label="Email address">
+              <button class="button button-primary" id="sendButton" type="button">Send My Timeline</button>
+            </div>
+
+            <div class="success" id="successMessage">Your timeline is on its way.</div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="container">
+    <footer>
+      <div>DSALTA Founder Compliance Playbook</div>
+      <div>Illustrative planning estimate. Prototype for discussion purposes only.</div>
+    </footer>
+  </div>
+
+  <script>
+    const goal = document.getElementById("goal");
+    const size = document.getElementById("size");
+    const owner = document.getElementById("owner");
+    const deadline = document.getElementById("deadline");
+    const generateButton = document.getElementById("generateButton");
+    const resetButton = document.getElementById("resetButton");
+    const emptyState = document.getElementById("emptyState");
+    const results = document.getElementById("results");
+    const timelineList = document.getElementById("timelineList");
+    const bottleneckList = document.getElementById("bottleneckList");
+    const sendButton = document.getElementById("sendButton");
+    const successMessage = document.getElementById("successMessage");
+    const email = document.getElementById("email");
+
+    const formatDate = (date) =>
+      date.toLocaleDateString("en-US", { month:"short", day:"numeric", year:"numeric" });
+
+    const addDays = (date, days) => {
+      const copy = new Date(date);
+      copy.setDate(copy.getDate() + days);
+      return copy;
+    };
+
+    const getRadio = (name) =>
+      document.querySelector(`input[name="${name}"]:checked`).value;
+
+    const milestoneTemplates = {
+      type1: [
+        ["Confirm scope and buyer requirements", "Clarify systems, services, data, and report expectations."],
+        ["Complete readiness review", "Identify control gaps and assign ownership."],
+        ["Draft and approve policies", "Create the policy foundation needed for your control environment."],
+        ["Implement missing controls", "Close operational and technical gaps."],
+        ["Collect and organize evidence", "Prepare support for control design and implementation."],
+        ["Internal quality review", "Resolve inconsistencies before the auditor begins."],
+        ["Type I examination", "Support auditor requests and address final questions."]
+      ],
+      type2: [
+        ["Confirm scope and buyer requirements", "Clarify systems, services, data, and report expectations."],
+        ["Complete readiness review", "Identify control gaps and assign ownership."],
+        ["Draft and approve policies", "Create the policy foundation needed for your control environment."],
+        ["Implement missing controls", "Close operational and technical gaps."],
+        ["Begin evidence collection", "Establish repeatable evidence capture before the observation period."],
+        ["Operate controls over time", "Maintain controls consistently through the observation period."],
+        ["Internal quality review", "Resolve evidence gaps before the auditor completes testing."],
+        ["Type II examination", "Support testing, follow-up requests, and final reporting."]
+      ],
+      hipaa: [
+        ["Confirm HIPAA scope", "Identify regulated data flows, systems, vendors, and responsibilities."],
+        ["Complete risk assessment", "Document risks, safeguards, and priority remediation work."],
+        ["Create policies and procedures", "Formalize privacy, security, access, incident, and workforce practices."],
+        ["Implement safeguards", "Close administrative, physical, and technical gaps."],
+        ["Complete workforce training", "Prepare staff to follow and document required practices."],
+        ["Review business associate agreements", "Confirm vendor and partner obligations are addressed."],
+        ["Validate readiness", "Review evidence, ownership, and operational consistency."]
+      ],
+      unknown: [
+        ["Clarify the business requirement", "Confirm what the buyer, partner, or market actually expects."],
+        ["Choose the right framework", "Map the requirement to SOC 2, HIPAA, or another standard."],
+        ["Define scope", "Identify systems, services, data, people, and vendors involved."],
+        ["Complete readiness review", "Identify gaps and prioritize the work."],
+        ["Implement priority controls", "Focus first on the controls that affect readiness and buyer confidence."],
+        ["Collect evidence", "Document how controls operate in practice."],
+        ["Validate next steps", "Confirm whether you are ready for an audit, assessment, or customer review."]
+      ]
+    };
+
+    function calculateWeeks(goalValue, maturity, sizeValue, ownerValue) {
+      let weeks = { type1:10, type2:20, hipaa:12, unknown:8 }[goalValue];
+
+      weeks += { none:6, basic:3, some:1, ready:-2 }[maturity];
+      weeks += { small:0, growing:1, scale:3, large:5 }[sizeValue];
+      weeks += { none:3, founder:2, technical:1, dedicated:-1 }[ownerValue];
+
+      return Math.max(4, weeks);
+    }
+
+    function buildMilestones(goalValue, weeks) {
+      const template = milestoneTemplates[goalValue];
+      const weights = template.map((_, index) => {
+        if (goalValue === "type2" && index === 5) return 4;
+        return index === 3 || index === 4 ? 2 : 1;
+      });
+
+      const totalWeight = weights.reduce((a,b) => a+b, 0);
+      let assigned = 0;
+
+      return template.map((item, index) => {
+        let duration = index === template.length - 1
+          ? Math.max(1, weeks - assigned)
+          : Math.max(1, Math.round((weeks * weights[index]) / totalWeight));
+
+        assigned += duration;
+
+        return {
+          name:item[0],
+          copy:item[1],
+          duration
+        };
+      });
+    }
+
+    function generateTimeline() {
+      const goalValue = goal.value;
+      const maturity = getRadio("maturity");
+      const sizeValue = size.value;
+      const ownerValue = owner.value;
+      const dealValue = getRadio("deal");
+
+      const weeks = calculateWeeks(goalValue, maturity, sizeValue, ownerValue);
+      const today = new Date();
+      const startDate = today;
+      const recommendedCompletion = addDays(startDate, weeks * 7);
+      const requestedDeadline = deadline.value ? new Date(deadline.value + "T12:00:00") : null;
+
+      const goalNames = {
+        type1:"SOC 2 Type I",
+        type2:"SOC 2 Type II",
+        hipaa:"HIPAA readiness",
+        unknown:"framework selection and readiness"
+      };
+
+      document.getElementById("resultHeadline").textContent =
+        `A ${weeks}-week path toward ${goalNames[goalValue]}`;
+
+      document.getElementById("resultIntro").textContent =
+        dealValue === "yes"
+          ? "Because a customer opportunity may be waiting, confirm the exact requirement immediately and run preparation work in parallel where possible."
+          : "This plan prioritizes the work needed to move forward without building unnecessary process too early.";
+
+      document.getElementById("durationMetric").textContent = `${weeks} weeks`;
+      document.getElementById("startMetric").textContent = formatDate(startDate);
+      document.getElementById("completionMetric").textContent = formatDate(recommendedCompletion);
+
+      const statusBanner = document.getElementById("statusBanner");
+
+      if (!requestedDeadline) {
+        statusBanner.className = "status-banner status-good";
+        statusBanner.textContent =
+          `A realistic target is ${formatDate(recommendedCompletion)}. This estimate assumes consistent ownership and timely decisions.`;
+      } else {
+        const availableDays = Math.ceil((requestedDeadline - today) / 86400000);
+        const neededDays = weeks * 7;
+
+        if (availableDays >= neededDays) {
+          statusBanner.className = "status-banner status-good";
+          statusBanner.textContent =
+            `Your requested date appears achievable with focused execution and limited delays.`;
+        } else if (availableDays >= neededDays * 0.75) {
+          statusBanner.className = "status-banner status-warning";
+          statusBanner.textContent =
+            `Your requested date is aggressive. Parallel work, fast decisions, and dedicated ownership will be important.`;
+        } else {
+          statusBanner.className = "status-banner status-risk";
+          statusBanner.textContent =
+            `Your requested date is unlikely without reducing scope or confirming that the buyer will accept an interim milestone.`;
+        }
+      }
+
+      timelineList.innerHTML = "";
+      buildMilestones(goalValue, weeks).forEach((milestone, index) => {
+        const item = document.createElement("div");
+        item.className = "milestone";
+        item.innerHTML = `
+          <div class="milestone-dot">${index + 1}</div>
+          <div class="milestone-card">
+            <div class="milestone-top">
+              <div class="milestone-name">${milestone.name}</div>
+              <div class="milestone-weeks">${milestone.duration} week${milestone.duration === 1 ? "" : "s"}</div>
+            </div>
+            <p class="milestone-copy">${milestone.copy}</p>
+          </div>
+        `;
+        timelineList.appendChild(item);
+      });
+
+      const bottlenecks = [];
+
+      if (ownerValue === "none") bottlenecks.push("No clear internal owner. Assign one person to coordinate decisions, evidence, and follow-through.");
+      if (ownerValue === "founder") bottlenecks.push("Founder bandwidth may slow execution unless recurring working time is protected.");
+      if (maturity === "none") bottlenecks.push("Policies, controls, and evidence will need to be built at the same time.");
+      if (sizeValue === "scale" || sizeValue === "large") bottlenecks.push("More systems, vendors, and stakeholders can expand scope and review time.");
+      if (dealValue === "yes") bottlenecks.push("Buyer expectations may change the required report type, scope, or timeline.");
+      if (goalValue === "unknown") bottlenecks.push("The wrong framework could create wasted effort. Confirm the external requirement first.");
+      if (goalValue === "type2") bottlenecks.push("The observation period requires controls to operate consistently over time.");
+      if (bottlenecks.length < 3) bottlenecks.push("Evidence collection can stall when owners do not know what must be retained.");
+
+      bottleneckList.innerHTML = "";
+      bottlenecks.slice(0,4).forEach((text) => {
+        const item = document.createElement("div");
+        item.className = "bottleneck";
+        item.textContent = text;
+        bottleneckList.appendChild(item);
+      });
+
+      emptyState.style.display = "none";
+      results.classList.add("active");
+      successMessage.classList.remove("active");
+      document.getElementById("resultsPanel").scrollIntoView({ behavior:"smooth", block:"start" });
+    }
+
+    generateButton.addEventListener("click", generateTimeline);
+
+    resetButton.addEventListener("click", () => {
+      goal.value = "type1";
+      size.value = "small";
+      owner.value = "none";
+      deadline.value = "";
+      document.getElementById("maturity-none").checked = true;
+      document.getElementById("deal-no").checked = true;
+      results.classList.remove("active");
+      emptyState.style.display = "grid";
+      email.value = "";
+      successMessage.classList.remove("active");
+    });
+
+    sendButton.addEventListener("click", () => {
+      if (!email.value || !email.checkValidity()) {
+        email.focus();
+        return;
+      }
+      successMessage.classList.add("active");
+      sendButton.textContent = "Sent";
+    });
+  </script>
+</body>
+</html>
