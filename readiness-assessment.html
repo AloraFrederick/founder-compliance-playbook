@@ -358,6 +358,101 @@
       padding: 20px 0;
       border-bottom: 1px solid var(--border);
     }
+    .email-capture {
+  margin-top: 34px;
+  padding: 30px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-green);
+}
+
+.email-capture h3 {
+  font-size: 30px;
+  line-height: 1.08;
+}
+
+.email-capture p {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.email-capture ul {
+  display: grid;
+  gap: 9px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.email-capture li {
+  position: relative;
+  padding-left: 26px;
+  color: var(--text);
+}
+
+.email-capture li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--brand-green);
+  font-weight: 600;
+}
+
+.email-form {
+  margin-top: 26px;
+}
+
+.email-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.email-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+}
+
+.email-row input {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--white);
+  color: var(--text);
+  outline: none;
+}
+
+.email-row input:focus {
+  border-color: var(--brand-green);
+  box-shadow: 0 0 0 3px rgba(13, 155, 89, 0.10);
+}
+
+.email-message {
+  min-height: 20px;
+  margin-top: 10px;
+  color: var(--brand-green);
+  font-size: 14px;
+}
+
+@media (max-width: 680px) {
+  .email-capture {
+    padding: 24px 20px;
+  }
+
+  .email-row {
+    grid-template-columns: 1fr;
+  }
+
+  .email-row .button {
+    width: 100%;
+  }
+}
 
     .step-number {
       width: 34px;
@@ -494,12 +589,60 @@
 
             <div class="result-body">
               <h3>What to do next</h3>
-              <div class="next-steps" id="nextSteps"></div>
+<div class="next-steps" id="nextSteps"></div>
 
-              <div class="result-actions">
-                <button class="button button-primary" type="button">Book Founder Office Hours</button>
-                <button class="button button-secondary" id="restartButton" type="button">Retake Assessment</button>
-              </div>
+<section class="email-capture">
+  <div class="email-capture-copy">
+    <h3>Your Compliance Action Plan is ready.</h3>
+
+    <p>
+      We'll send you a personalized plan based on your assessment, including:
+    </p>
+
+    <ul>
+      <li>Your recommended starting point</li>
+      <li>A realistic implementation timeline</li>
+      <li>Priority actions for your current stage</li>
+      <li>What can wait until later</li>
+      <li>Resources matched to your needs</li>
+    </ul>
+  </div>
+
+  <div class="email-form">
+    <label for="emailAddress">Email address</label>
+
+    <div class="email-row">
+      <input
+        id="emailAddress"
+        name="email"
+        type="email"
+        placeholder="you@company.com"
+        autocomplete="email"
+        required
+      />
+
+      <button
+        class="button button-primary"
+        id="sendPlanButton"
+        type="button"
+      >
+        Send My Action Plan
+      </button>
+    </div>
+
+    <div class="email-message" id="emailMessage" aria-live="polite"></div>
+  </div>
+</section>
+
+<div class="result-actions">
+  <button class="button button-secondary" type="button">
+    Book Founder Office Hours
+  </button>
+
+  <button class="button button-secondary" id="restartButton" type="button">
+    Retake Assessment
+  </button>
+</div>
 
               <div class="disclaimer">
                 This assessment is an initial planning tool, not legal or audit advice.
@@ -770,7 +913,22 @@
       renderQuestion();
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
+const emailAddress = document.getElementById("emailAddress");
+const sendPlanButton = document.getElementById("sendPlanButton");
+const emailMessage = document.getElementById("emailMessage");
 
+sendPlanButton.addEventListener("click", () => {
+  const email = emailAddress.value.trim();
+
+  if (!email || !emailAddress.checkValidity()) {
+    emailMessage.textContent = "Please enter a valid email address.";
+    emailAddress.focus();
+    return;
+  }
+
+  emailMessage.textContent =
+    "Your Compliance Action Plan is ready to send. Email delivery is simulated in this prototype.";
+});
     renderQuestion();
   </script>
 </body>
