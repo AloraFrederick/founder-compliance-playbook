@@ -350,6 +350,17 @@ text-decoration: none;
       overflow: hidden;
     }
 
+    .tool {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+    .tool {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
     .tool::after {
       content: "";
       position: absolute;
@@ -650,35 +661,33 @@ text-decoration: none;
 
 
       <div class="tools-grid">
-        <button class="tool">
-          <div class="tool-icon-box" aria-hidden="true">
-            <svg viewBox="0 0 48 48">
-              <circle cx="24" cy="24" r="17"></circle>
-              <path d="M24 15v9l7 4"></path>
-              <path d="M13 11l-3-3"></path>
-            </svg>
-          </div>
-          <div class="tool-title">Readiness Assessment</div>
-          <div class="tool-copy">Answer a few questions and get a clear next step.</div>
-          <div class="tool-action">Start assessment <span>→</span></div>
-        </button>
+        <a href="readiness-assessment.html" class="tool">
+    <div class="tool-icon-box" aria-hidden="true">
+        ...
+    </div>
 
-        <button class="tool">
-          <div class="tool-icon-box" aria-hidden="true">
-            <svg viewBox="0 0 48 48">
-              <rect x="7" y="9" width="34" height="30" rx="4"></rect>
-              <path d="M14 5v8"></path>
-              <path d="M34 5v8"></path>
-              <path d="M7 18h34"></path>
-              <path d="M15 25h7"></path>
-              <path d="M26 25h7"></path>
-              <path d="M15 31h7"></path>
-            </svg>
-          </div>
-          <div class="tool-title">Timeline Planner</div>
-          <div class="tool-copy">Map the path from today to audit-ready.</div>
-          <div class="tool-action">Build timeline <span>→</span></div>
-        </button>
+    <div class="tool-title">Readiness Assessment</div>
+    <div class="tool-copy">
+        Answer a few questions and get a clear next step.
+    </div>
+    <div class="tool-action">
+        Start assessment <span>→</span>
+    </div>
+</a>
+
+        <a href="timeline-planner.html" class="tool">
+    <div class="tool-icon-box" aria-hidden="true">
+        ...
+    </div>
+
+    <div class="tool-title">Timeline Planner</div>
+    <div class="tool-copy">
+        Map the path from today to audit-ready.
+    </div>
+    <div class="tool-action">
+        Build timeline <span>→</span>
+    </div>
+</a>
 
         <button class="tool">
           <div class="tool-icon-box" aria-hidden="true">
