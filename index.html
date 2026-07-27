@@ -820,9 +820,6 @@ text-decoration: none;
 
     searchInput.addEventListener("input", applySearch);
 
-    browseButton.addEventListener("click", () => {
-      document.getElementById("playbook").scrollIntoView({ behavior: "smooth" });
-    });
 
     document.querySelectorAll('a[href="#"]').forEach((link) => {
       link.addEventListener("click", (event) => event.preventDefault());
